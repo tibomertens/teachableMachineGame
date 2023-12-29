@@ -1,6 +1,8 @@
 let player;
 let cars = [];
 let bg;
+let restartButton;
+let gameIsOver = false;
 
 let imageModelURL = "https://teachablemachine.withgoogle.com/models/lUQbu95fv/";
 
@@ -10,7 +12,7 @@ let label = "waiting...";
 
 let classifier;
 
-let spawnInterval = 30; 
+let spawnInterval = 30;
 
 function preload() {
   bg = loadImage("images/background.jpg");
@@ -34,6 +36,12 @@ function setup() {
   // Initialize the game
   player = new Player(screen.width / 2, screen.height / 2);
   cars = [];
+
+  // Create restart button
+  restartButton = createButton("Restart");
+  restartButton.position(140, 530);
+  restartButton.mousePressed(restartGame);
+  restartButton.hide();
 }
 
 // Get a prediction for the current video frame
@@ -58,7 +66,7 @@ function gotResult(error, results) {
     player.moveRight();
   }
   console.log(label);
-  // Classifiy again!
+  // Classify again!
   classifyVideo();
 }
 
@@ -90,8 +98,13 @@ function draw() {
   textAlign(CENTER, CENTER);
   text(label, 170, 430);
 
-  // Spawn a new car every couple of seconds
-  if (frameCount % spawnInterval === 0) {
+  if (gameIsOver) {
+    console.log("Game over!");
+    restartButton.show();
+  }
+
+  // Spawn a new car every 0.5 seconds
+  if (!gameIsOver && frameCount % spawnInterval === 0) {
     let randomX = random(350, screen.width);
     let randomColor = color(random(255), random(255), random(255));
     let newCar = new Car(randomX, 0, randomColor);
@@ -131,6 +144,19 @@ function draw() {
 }
 
 function gameOver() {
-  // stop the game loop
+  // Stop the game loop
   noLoop();
+  gameIsOver = true;
+  console.log("Game over!");
+  console.log(gameIsOver);
+  restartButton.show();
+}
+
+function restartGame() {
+  // Reset variables
+  player = new Player(screen.width / 2, screen.height / 2);
+  cars = [];
+  gameIsOver = false;
+  loop(); // Restart the game loop
+  restartButton.hide(); // Hide the restart button
 }
