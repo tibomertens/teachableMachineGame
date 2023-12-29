@@ -3,6 +3,7 @@ class Player {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.speed = 10;
   }
 
   display() {
@@ -26,10 +27,16 @@ class Player {
   }
 
   moveLeft() {
-    this.x -= 10;
+    // Check if the player is within the left boundary
+    if (this.x - this.speed > 350) {
+      this.x -= this.speed;
+    }
   }
 
   moveRight() {
-    this.x += 10;
+    // Check if the player is within the right boundary
+    if (this.x + this.speed < screen.width - 50) {
+      this.x += this.speed;
+    }
   }
 }
