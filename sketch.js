@@ -2,7 +2,7 @@ let player;
 let cars = [];
 let bg;
 
-let imageModelURL = "https://teachablemachine.withgoogle.com/models/Kr-x5Uac0/";
+let imageModelURL = "https://teachablemachine.withgoogle.com/models/lUQbu95fv/";
 
 let video;
 let flipVideo;
@@ -48,6 +48,12 @@ function gotResult(error, results) {
   }
   // The results are in an array ordered by confidence.
   label = results[0].label;
+
+  if (label === "Links") {
+    player.moveLeft();
+  } else if (label === "Rechts") {
+    player.moveRight();
+  }
   console.log(label);
   // Classifiy again!
   classifyVideo();

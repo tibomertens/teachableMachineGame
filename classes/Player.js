@@ -25,9 +25,11 @@ class Player {
     line(this.x + 20, this.y - 20, this.x + 25, this.y - 30);
   }
 
-  move() {
-    //move player based on mouse position
-    this.x = mouseX;
-    this.y = mouseY;
+  moveLeft() {
+    this.x -= 10;
+  }
+
+  moveRight() {
+    this.x += 10;
   }
 }
