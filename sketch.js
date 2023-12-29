@@ -16,7 +16,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1500, 700);
+  let canvas = createCanvas(screen.width, screen.height);
+  canvas.position(windowWidth - width, 0); // Align to the right, 0 from the top
 
   // Create the video
   video = createCapture(VIDEO);
@@ -65,12 +66,31 @@ function draw() {
   imageMode(CENTER);
   image(bg, width / 2, height / 2, width, height);
 
+  //draw a rect underneath the video
+  fill(255);
+  noStroke();
+  rectMode(CORNER);
+  rect(0, 0, 350, screen.height);
+
   imageMode(CORNER);
   image(flippedVideo, 10, 10);
 
+  //write the instructions
+  fill(0);
+  textSize(16);
+  textAlign(CORNER, CORNER);
+  text("Hand open voor Links", 90, 300);
+  text("Vuist voor Rechts", 75, 350);
+
+  //write the label in the middle of the rectangle
+  fill(0);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text(label, 170, 430);
+
   // Spawn a new car every couple of seconds
   if (frameCount % 60 === 0) {
-    let randomX = random(width);
+    let randomX = random(500, screen.width);
     let randomColor = color(random(255), random(255), random(255));
     let newCar = new Car(randomX, 0, randomColor);
     cars.push(newCar);
