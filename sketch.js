@@ -10,6 +10,8 @@ let label = "waiting...";
 
 let classifier;
 
+let spawnInterval = 30; 
+
 function preload() {
   bg = loadImage("images/background.jpg");
   classifier = ml5.imageClassifier(imageModelURL + "model.json");
@@ -30,7 +32,7 @@ function setup() {
   classifyVideo();
 
   // Initialize the game
-  player = new Player(1400, 700 / 2);
+  player = new Player(screen.width / 2, screen.height / 2);
   cars = [];
 }
 
@@ -89,8 +91,8 @@ function draw() {
   text(label, 170, 430);
 
   // Spawn a new car every couple of seconds
-  if (frameCount % 60 === 0) {
-    let randomX = random(500, screen.width);
+  if (frameCount % spawnInterval === 0) {
+    let randomX = random(350, screen.width);
     let randomColor = color(random(255), random(255), random(255));
     let newCar = new Car(randomX, 0, randomColor);
     cars.push(newCar);
