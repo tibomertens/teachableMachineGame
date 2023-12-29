@@ -2,16 +2,55 @@ let player;
 let cars = [];
 let bg;
 
+let imageModelURL = "https://teachablemachine.withgoogle.com/models/Kr-x5Uac0/";
+
+let video;
+let flipVideo;
+let label = "waiting...";
+
+let classifier;
+
 function preload() {
   bg = loadImage("images/background.jpg");
+  classifier = ml5.imageClassifier(imageModelURL + "model.json");
 }
 
-async function setup() {
+function setup() {
   createCanvas(1500, 700);
+
+  // Create the video
+  video = createCapture(VIDEO);
+  video.size(320, 240);
+  video.hide();
+
+  flippedVideo = ml5.flipImage(video);
+
+  // Start classifying
+  classifyVideo();
 
   // Initialize the game
   player = new Player(1400, 700 / 2);
   cars = [];
+}
+
+// Get a prediction for the current video frame
+function classifyVideo() {
+  flippedVideo = ml5.flipImage(video);
+  classifier.classify(flippedVideo, gotResult);
+}
+
+// When we get a result
+function gotResult(error, results) {
+  // If there is an error
+  if (error) {
+    console.error(error);
+    return;
+  }
+  // The results are in an array ordered by confidence.
+  label = results[0].label;
+  console.log(label);
+  // Classifiy again!
+  classifyVideo();
 }
 
 function draw() {
@@ -19,6 +58,9 @@ function draw() {
   background(0);
   imageMode(CENTER);
   image(bg, width / 2, height / 2, width, height);
+
+  imageMode(CORNER);
+  image(flippedVideo, 10, 10);
 
   // Spawn a new car every couple of seconds
   if (frameCount % 60 === 0) {
@@ -58,7 +100,6 @@ function draw() {
 
   // Display and move the player
   player.display();
-  player.move();
 }
 
 function gameOver() {
