@@ -2,7 +2,7 @@ let player;
 let cars = [];
 let bg;
 let restartButton;
-let gameIsOver = false;
+let gameIsOver = true;
 
 let imageModelURL = "https://teachablemachine.withgoogle.com/models/lUQbu95fv/";
 
@@ -23,6 +23,8 @@ function setup() {
   let canvas = createCanvas(screen.width, screen.height);
   canvas.position(windowWidth - width, 0); // Align to the right, 0 from the top
 
+  noLoop(); // Don't start the game loop until the user clicks "Start"
+
   // Create the video
   video = createCapture(VIDEO);
   video.size(320, 240);
@@ -38,7 +40,7 @@ function setup() {
   cars = [];
 
   // Create restart button
-  restartButton = createButton("Restart");
+  restartButton = createButton("(re)start");
   restartButton.position(140, 530);
   restartButton.mousePressed(restartGame);
   restartButton.hide();
@@ -99,7 +101,6 @@ function draw() {
   text(label, 170, 430);
 
   if (gameIsOver) {
-    console.log("Game over!");
     restartButton.show();
   }
 
