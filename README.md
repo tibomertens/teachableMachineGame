@@ -1,7 +1,7 @@
 # Teachable machine game -  dodge the cars
 
 ## Where to play?
-You can play the game [here](https://teachable-machine-game.vercel.app/)
+You can play the game [here](https://teachable-machine-game.vercel.app/) or clone this repository and play it locally on your computer
 
 ## How to play?
 Point your camera to your hand, **only your hand should be on the screen** <br>
