@@ -4,7 +4,7 @@ let bg;
 let restartButton;
 let gameIsOver = true;
 
-let imageModelURL = "https://teachablemachine.withgoogle.com/models/lUQbu95fv/";
+let imageModelURL = "https://teachablemachine.withgoogle.com/models/wvt-tTMr0/";
 
 let video;
 let flipVideo;
